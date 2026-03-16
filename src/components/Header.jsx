@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 
 const navLinks = [
@@ -70,30 +71,42 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Mobile nav overlay */}
-      <div
-        className={`md:hidden fixed inset-x-0 bottom-0 top-[calc(env(safe-area-inset-top)+4rem)] bg-dark/98 backdrop-blur-2xl border-t border-white/10 transition-opacity duration-300 ${menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
-        aria-hidden={!menuOpen}
-      >
-        <nav className="flex flex-col p-6 gap-2">
-          {navLinks.map(({ to, label, isButton, outline }) => (
-            <Link
-              key={label}
-              to={to}
-              onClick={closeMenu}
-              className={`block py-4 px-4 rounded-xl text-base font-medium transition-colors touch-manipulation min-h-[48px] flex items-center ${
-                isButton
-                  ? outline
-                    ? 'border border-[#2693D8]/50 text-[#2693D8] hover:bg-[#2693D8]/10'
-                    : 'bg-[#2693D8] text-black hover:bg-[#3BA3E8]'
-                  : 'text-white/80 hover:text-[#2693D8] hover:bg-white/5'
-              }`}
-            >
-              {label}
-            </Link>
-          ))}
-        </nav>
-      </div>
+      {/* Mobile nav overlay - rendered via portal to ensure it's on top, solid background for mobile */}
+      {typeof document !== 'undefined' &&
+        createPortal(
+          <div
+            className={`md:hidden fixed inset-0 z-[9999] transition-opacity duration-300 ${menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+            style={{
+              top: 'calc(env(safe-area-inset-top) + 4rem)',
+              backgroundColor: '#000000',
+              WebkitBackfaceVisibility: 'hidden',
+              backfaceVisibility: 'hidden',
+            }}
+            aria-hidden={!menuOpen}
+          >
+            <div className="h-full w-full border-t border-white/10 overflow-auto bg-black">
+              <nav className="flex flex-col p-6 gap-2">
+                {navLinks.map(({ to, label, isButton, outline }) => (
+                  <Link
+                    key={label}
+                    to={to}
+                    onClick={closeMenu}
+                    className={`block py-4 px-4 rounded-xl text-base font-medium transition-colors touch-manipulation min-h-[48px] flex items-center ${
+                      isButton
+                        ? outline
+                          ? 'border border-[#2693D8]/50 text-[#2693D8] hover:bg-[#2693D8]/10'
+                          : 'bg-[#2693D8] text-black hover:bg-[#3BA3E8]'
+                        : 'text-white/80 hover:text-[#2693D8] hover:bg-white/5'
+                    }`}
+                  >
+                    {label}
+                  </Link>
+                ))}
+              </nav>
+            </div>
+          </div>,
+          document.body
+        )}
     </header>
   )
 }
