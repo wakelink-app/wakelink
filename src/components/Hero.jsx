@@ -33,12 +33,6 @@ export default function Hero() {
           >
             Become an Owner
           </Link>
-          <a
-            href="#rent"
-            className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 bg-[#2693D8] text-black font-semibold rounded-xl shadow-soft hover:bg-[#3BA3E8] transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-0.5 text-center min-h-[48px] flex items-center justify-center touch-manipulation"
-          >
-            Find a Jet Ski
-          </a>
         </div>
       </div>
     </section>
