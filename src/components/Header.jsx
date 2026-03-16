@@ -72,7 +72,7 @@ export default function Header() {
 
       {/* Mobile nav overlay */}
       <div
-        className={`md:hidden fixed inset-x-0 bottom-0 top-[calc(env(safe-area-inset-top)+4rem)] bg-dark/95 backdrop-blur-md transition-opacity duration-300 ${menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        className={`md:hidden fixed inset-x-0 bottom-0 top-[calc(env(safe-area-inset-top)+4rem)] bg-dark/98 backdrop-blur-2xl border-t border-white/10 transition-opacity duration-300 ${menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         aria-hidden={!menuOpen}
       >
         <nav className="flex flex-col p-6 gap-2">
